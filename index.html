@@ -3,68 +3,80 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0d0f2b">
+<meta name="theme-color" content="#262624">
 <title>DomainDesk</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0d0f2b;--s1:#171a40;--s2:#20245a;--tx:#eceeff;--mu:#9aa0d6;--cy:#3de1ff;--mg:#ff4fd8;--au:#ffc857;--gn:#4dffb0;--rd:#ff6b7a;--r:18px}
+:root{color-scheme:dark;--bg:#262624;--s1:#30302e;--s2:#3b3a37;--bd:#46453f;--tx:#faf9f5;--mu:#a8a69c;--cy:#d97757;--mg:#c6613f;--au:#e0b25c;--gn:#8cc084;--rd:#e8776d;--r:12px}
 *{box-sizing:border-box;margin:0}
-html,body{height:100%}
-body{font:15px/1.5 'DM Sans',sans-serif;color:var(--tx);background:radial-gradient(900px 500px at 85% -10%,#3b1d7a55,transparent),radial-gradient(700px 500px at -10% 110%,#0b6e8c44,transparent),var(--bg);padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom)}
-h1,h2,h3,.big{font-family:Sora,sans-serif}
+html,body{min-height:100%}
+body{font:15px/1.55 -apple-system,'Segoe UI',Inter,system-ui,sans-serif;color:var(--tx);background:var(--bg);padding-top:env(safe-area-inset-top);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4,.big,.logo{font-family:'Source Serif 4',Georgia,serif;font-weight:500;letter-spacing:-.01em}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0}
 :focus-visible{outline:2px solid var(--cy);outline-offset:2px}
 .hide{display:none!important}
-.btn{background:linear-gradient(135deg,var(--cy),var(--mg));color:#0d0f2b;font-weight:700;padding:10px 18px;border-radius:12px}
-.btn.g{background:var(--s2);color:var(--tx)}.btn.sm{padding:6px 12px;font-size:13px}.btn.d{background:#4a1f3d;color:var(--rd)}
-input,select,textarea{background:#0d0f2b;border:1px solid #343a82;border-radius:12px;padding:10px 12px;width:100%}
+.btn{background:var(--cy);color:#fff;font-weight:600;padding:9px 16px;border-radius:10px;transition:background .15s}
+.btn:hover{background:var(--mg)}
+.btn.g{background:var(--s2);color:var(--tx);border:1px solid var(--bd)}.btn.g:hover{background:#45443f}
+.btn.d{background:transparent;color:var(--rd);border:1px solid var(--bd)}.btn.d:hover{background:#402a28}
+.btn.sm{padding:5px 11px;font-size:13px}.btn:disabled{opacity:.55;cursor:wait}
+input,select,textarea{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px 12px;width:100%;min-width:0}
+input:focus,select:focus,textarea:focus{border-color:var(--cy);outline:0}
+input[type=checkbox]{width:auto;padding:0;accent-color:var(--cy)}
 label{display:block;font-size:13px;color:var(--mu);margin-bottom:4px}
 #login{min-height:100vh;display:grid;place-items:center;padding:20px}
-.lbox{background:var(--s1);border:1px solid #343a82;border-radius:24px;padding:32px;width:min(380px,100%);text-align:center}
+.lbox{background:var(--s1);border:1px solid var(--bd);border-radius:16px;padding:32px;width:min(380px,100%);text-align:center}
 .lbox h1{font-size:30px;margin-bottom:6px}.lbox p{color:var(--mu);margin-bottom:18px}.lbox input{margin-bottom:12px;text-align:center}
-#err{color:var(--rd);min-height:22px;font-size:13px}
-.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
-nav{background:#0a0c24;border-right:1px solid #262b66;padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:6px}
-.logo{font:800 22px Sora;margin:0 8px 18px;background:linear-gradient(135deg,var(--cy),var(--mg));-webkit-background-clip:text;color:transparent}
-nav button{background:none;text-align:left;padding:11px 14px;border-radius:12px;color:var(--mu);font-weight:500}
-nav button.on{background:var(--s2);color:var(--tx)}
-main{padding:24px;max-width:1150px;width:100%}
+#err{color:var(--rd);min-height:22px;font-size:13px;margin-bottom:6px}
+.app{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100vh}
+nav{background:#1f1e1d;border-right:1px solid var(--bd);padding:20px 12px;position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;gap:2px;overflow-y:auto}
+.logo{font-size:22px;margin:0 10px 18px}
+nav button{background:none;text-align:left;padding:9px 12px;border-radius:8px;color:var(--mu);font-weight:500}
+nav button:hover{background:var(--s1);color:var(--tx)}nav button.on{background:var(--s2);color:var(--tx)}
+main{padding:28px;max-width:1100px;width:100%;min-width:0}
 .top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-.top h2{font-size:26px}
-.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(4,1fr)}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
-.card{background:var(--s1);border:1px solid #2b3070;border-radius:var(--r);padding:18px}
-.card h3{font-size:16px;margin-bottom:10px}
-.stat span{color:var(--mu);font-size:13px}.big{font-size:28px;font-weight:800;margin-top:2px}
-.big.in{color:var(--au)}.big.up{color:var(--gn)}.big.dn{color:var(--rd)}
-.row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid #262b66;align-items:flex-start}
+.top h2{font-size:28px}
+.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(4,minmax(0,1fr))}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r);padding:18px;min-width:0}
+.card h3{font-size:17px;margin-bottom:10px}
+.stat span{color:var(--mu);font-size:13px}.big{font-size:28px;margin-top:2px;line-height:1.25}
+.big.in{color:var(--tx)}.big.up{color:var(--gn)}.big.dn{color:var(--rd)}
+.row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd);align-items:flex-start}
 .row:last-child{border:0}.row small{color:var(--mu);display:block}
-.tag{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--s2);white-space:nowrap}
-.tag.sold{background:#134a38;color:var(--gn)}.tag.listed{background:#4a3c13;color:var(--au)}.tag.owned{background:#134556;color:var(--cy)}.tag.avail{background:#134a38;color:var(--gn)}.tag.taken{background:#4a1f3d;color:var(--rd)}.lk{color:var(--cy);font-size:12px;margin-right:8px;text-decoration:none}
+.tag{font-size:12px;padding:2px 9px;border-radius:99px;background:var(--s2);color:var(--mu);white-space:nowrap}
+.tag.sold,.tag.avail{background:#2e3a2b;color:var(--gn)}.tag.listed{background:#3d3524;color:var(--au)}.tag.owned{background:#3d2f29;color:var(--cy)}.tag.taken{background:#402a28;color:var(--rd)}
+label.tag{display:inline-flex;align-items:center;gap:6px;color:var(--tx);padding:5px 11px;font-size:13px;border:1px solid var(--bd);margin:0}
+label.tag:has(input:checked){border-color:var(--cy);background:#3d2f29}
+.lk{color:var(--cy);font-size:12px;margin-right:8px;text-decoration:none}.lk:hover{text-decoration:underline}
 .bars{display:flex;align-items:flex-end;gap:8px;height:140px}
 .bars div{flex:1;text-align:center;font-size:11px;color:var(--mu)}
-.bars i{display:block;border-radius:6px 6px 0 0;background:linear-gradient(var(--cy),var(--mg));min-height:3px;margin-bottom:4px}
-.bars i.neg{background:var(--rd)}
-.tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:640px}
-th{text-align:left;color:var(--mu);font-weight:500;font-size:13px;padding:8px}td{padding:10px 8px;border-top:1px solid #262b66}
-#chat{height:52vh;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px}
-.m{max-width:85%;padding:10px 14px;border-radius:16px;background:var(--s2);white-space:pre-wrap}
-.m.u{align-self:flex-end;background:linear-gradient(135deg,#1c6f8a,#8a2a85)}
+.bars i{display:block;border-radius:4px 4px 0 0;background:var(--cy);min-height:3px;margin-bottom:4px}.bars i.neg{background:var(--rd)}
+.tbl{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:620px}
+th{text-align:left;color:var(--mu);font-weight:500;font-size:13px;padding:8px}td{padding:10px 8px;border-top:1px solid var(--bd);overflow-wrap:anywhere}
+#chat{height:min(52vh,520px);overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:4px}
+.m{max-width:88%;padding:10px 14px;border-radius:14px;background:var(--s2);overflow-wrap:anywhere}
+.m.u{align-self:flex-end;background:#3d2f29;border:1px solid #5a3f33;white-space:pre-wrap}
 .m small{display:block;color:var(--mu);margin-top:4px;font-size:11px}
-.send{display:flex;gap:8px;margin-top:12px}
-dialog{background:var(--s1);color:var(--tx);border:1px solid #343a82;border-radius:22px;padding:22px;width:min(520px,94vw);max-height:92vh;overflow:auto}
+.send{display:flex;gap:8px;margin-top:12px}.send .btn{flex:none}
+.md p,.md ul,.md ol,.md pre,.md blockquote{margin:0 0 .6em}.md>*:last-child{margin-bottom:0}
+.md ul,.md ol{padding-left:1.3em}.md li{margin:.15em 0}.md h4{font-size:16px;margin:.4em 0 .3em}
+.md code{background:#1f1e1d;padding:1px 6px;border-radius:5px;font:.88em ui-monospace,Consolas,monospace}
+.md pre{background:#1f1e1d;border:1px solid var(--bd);padding:10px 12px;border-radius:8px;overflow-x:auto}.md pre code{padding:0;background:none}
+.md blockquote{border-left:3px solid var(--cy);padding-left:10px;color:var(--mu)}.md a{color:var(--cy)}.md hr{border:0;border-top:1px solid var(--bd);margin:.8em 0}
+dialog{background:var(--s1);color:var(--tx);border:1px solid var(--bd);border-radius:16px;padding:22px;width:min(520px,94vw);max-height:92vh;overflow:auto;margin:auto}
 dialog::backdrop{background:#000a}
 .f2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.f2>div{margin-bottom:6px}
-.toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:var(--s2);padding:10px 18px;border-radius:12px;z-index:9;border:1px solid var(--cy)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--s2);padding:10px 18px;border-radius:10px;z-index:9;border:1px solid var(--bd);max-width:92vw}
 .muted{color:var(--mu)}.pre{white-space:pre-wrap}
-.score{height:8px;background:#0d0f2b;border-radius:9px;overflow:hidden;margin-top:6px}.score i{display:block;height:100%;background:linear-gradient(90deg,var(--rd),var(--au),var(--gn))}
+.score{height:6px;background:var(--bg);border-radius:9px;overflow:hidden;margin-top:6px}.score i{display:block;height:100%;background:var(--cy)}
 @media(max-width:820px){
-.app{grid-template-columns:1fr}
-nav{position:fixed;bottom:0;left:0;right:0;top:auto;height:auto;flex-direction:row;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:5;border-top:1px solid #262b66;border-right:0}
-.logo{display:none}nav button{padding:8px 2px;font-size:11px;text-align:center;flex:1}
-main{padding:16px 14px 90px}.g4{grid-template-columns:1fr 1fr}.g2,.g3{grid-template-columns:1fr}.big{font-size:22px}}
-@media(prefers-reduced-motion:no-preference){.card{transition:border-color .2s}.card:hover{border-color:#4a53c0}}
+.app{grid-template-columns:minmax(0,1fr)}
+nav{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;gap:4px;overflow-x:auto;overflow-y:hidden;padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5;border-top:1px solid var(--bd);border-right:0}
+.logo{display:none}nav button{flex:0 0 auto;padding:10px 14px;white-space:nowrap}#out{margin:0 0 0 auto!important}
+main{padding:18px 14px 90px}.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g2,.g3{grid-template-columns:minmax(0,1fr)}.big{font-size:22px}.toast{bottom:84px}}
+@media(max-width:520px){.f2{grid-template-columns:1fr}.top h2{font-size:23px}}
 </style>
 </head>
 <body>
@@ -109,6 +121,27 @@ const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const $$$=n=>'$'+(+n||0).toLocaleString(undefined,{maximumFractionDigits:0});
 
+/* ---------- Markdown for AI replies ---------- */
+const md=s=>{
+ const keep=[],K=h=>'\u0001'+(keep.push(h)-1)+'\u0001';
+ const t=esc(s).replace(/```[\w-]*\n?([\s\S]*?)```/g,(_,c)=>K('<pre><code>'+c.replace(/\n$/,'')+'</code></pre>')).replace(/`([^`\n]+)`/g,(_,c)=>K('<code>'+c+'</code>'));
+ const il=x=>x.replace(/\*\*(.+?)\*\*|__(.+?)__/g,(_,a,b)=>'<strong>'+(a||b)+'</strong>')
+  .replace(/(^|[^*\w])\*([^\s*](?:[^*]*[^\s*])?)\*(?!\*)/g,'$1<em>$2</em>')
+  .replace(/(^|[^_\w])_([^\s_](?:[^_]*[^\s_])?)_(?!\w)/g,'$1<em>$2</em>')
+  .replace(/~~(.+?)~~/g,'<del>$1</del>')
+  .replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+ const out=[];let list=null;const close=()=>{if(list){out.push('</'+list+'>');list=null}};
+ for(const ln of t.split('\n')){let m;
+  if(/^\u0001\d+\u0001$/.test(ln.trim())){close();out.push(ln.trim())}
+  else if(m=ln.match(/^\s*[-*\u2022]\s+(.*)/)){if(list!=='ul'){close();out.push('<ul>');list='ul'}out.push('<li>'+il(m[1])+'</li>')}
+  else if(m=ln.match(/^\s*\d+[.)]\s+(.*)/)){if(list!=='ol'){close();out.push('<ol>');list='ol'}out.push('<li>'+il(m[1])+'</li>')}
+  else if(m=ln.match(/^#{1,6}\s+(.*)/)){close();out.push('<h4>'+il(m[1])+'</h4>')}
+  else if(m=ln.match(/^&gt;\s?(.*)/)){close();out.push('<blockquote>'+il(m[1])+'</blockquote>')}
+  else if(/^\s*([-*_])\1{2,}\s*$/.test(ln)){close();out.push('<hr>')}
+  else if(!ln.trim())close();
+  else{close();out.push('<p>'+il(ln)+'</p>')}}
+ close();return out.join('').replace(/\u0001(\d+)\u0001/g,(_,i)=>keep[i])};
+
 /* ---------- IndexedDB ---------- */
 const DB=new Promise((ok,no)=>{const q=indexedDB.open('domaindesk',1);q.onupgradeneeded=()=>{q.result.createObjectStore('domains',{keyPath:'id'});q.result.createObjectStore('kv')};q.onsuccess=()=>ok(q.result);q.onerror=no});
 const tx=async(s,m,f)=>{const d=await DB;return new Promise((ok,no)=>{const t=d.transaction(s,m),o=f(t.objectStore(s));t.oncomplete=()=>ok(o.result);t.onerror=()=>no(t.error)})};
@@ -126,7 +159,7 @@ $('#out').onclick=()=>{localStorage.removeItem('dd_tok');tok=null;showLogin()};
 async function ai(prompt,json){
  const r=await fetch('/api/ai',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+tok},body:JSON.stringify({prompt,json})});
  if(r.status===401){$('#out').click();throw new Error('Session expired')}
- const d=await r.json();if(!r.ok)throw new Error(d.error||'AI failed');return d}
+ const d=await r.json();if(!r.ok)throw new Error((d.error||'AI failed')+(d.details?.length?' ('+d.details[0]+')':''));return d}
 const parse=t=>JSON.parse(t.replace(/```json|```/g,'').trim());
 
 /* ---------- Domain math ---------- */
@@ -172,13 +205,13 @@ V.ana=()=>`<div class="top"><h2>Analytics</h2></div><div class="grid g2">${D.map
  <div class="row"><span>Quality score</span><b>${s}/100</b></div><div class="score"><i style="width:${s}%"></i></div>
  <div class="row"><span>Held</span><b>${h==null?'-':h+' days'}</b></div><div class="row"><span>Profit / ROI</span><b>${p==null?'-':$$$(p)+' / '+(roi??0)+'%'}</b></div>
  <div class="row"><span>Margin if sold at ask</span><b>${d.ask&&d.buy?$$$(d.ask-d.buy):'-'}</b></div>
- <button class="btn sm" style="margin-top:8px" onclick="verdict(${d.id},this)">Ask AI</button><p class="pre muted" id="v${d.id}" style="margin-top:8px"></p></div>`}).join('')||'<div class="card muted">Add domains to see analytics.</div>'}</div>`;
+ <button class="btn sm" style="margin-top:8px" onclick="verdict(${d.id},this)">Ask AI</button><div class="md" id="v${d.id}" style="margin-top:8px"></div></div>`}).join('')||'<div class="card muted">Add domains to see analytics.</div>'}</div>`;
 V.ai=async()=>{const h=await kget('chat')||[];return`<div class="top"><h2>AI Coach</h2><button class="btn g sm" id="cc">Clear chat</button></div><div class="card"><div id="chat">${h.length?h.map(mh).join(''):'<p class="muted">Ask which domain is better, what to price a name at, or where to sell.</p>'}</div>
  <form class="send" id="cf"><input id="ci" placeholder="Which is better, ai-tools.com or toolly.ai?" autocomplete="off"><button class="btn">Send</button></form></div>`};
-const mh=m=>`<div class="m ${m.r}">${esc(m.t)}${m.model?`<small>${esc(m.model)}</small>`:''}</div>`;
+const mh=m=>`<div class="m ${m.r}${m.r==='a'?' md':''}">${m.r==='a'?md(m.t):esc(m.t)}${m.model?`<small>${esc(m.model)}</small>`:''}</div>`;
 V.tools=()=>`<div class="top"><h2>Tools</h2></div><div class="grid g2">
  <div class="card"><h3>Quick valuation score</h3><div class="send" style="margin:0"><input id="vs" placeholder="brandable.com"><button class="btn" id="vb">Score</button></div><div id="vr" style="margin-top:12px"></div></div>
- <div class="card"><h3>AI name generator</h3><div class="send" style="margin:0"><input id="gn" placeholder="Niche, e.g. pet tech"><button class="btn" id="gb">Generate</button></div><div id="gr" class="pre" style="margin-top:12px"></div></div>
+ <div class="card"><h3>AI name generator</h3><div class="send" style="margin:0"><input id="gn" placeholder="Niche, e.g. pet tech"><button class="btn" id="gb">Generate</button></div><div id="gr" class="md" style="margin-top:12px"></div></div>
  <div class="card"><h3>Profit calculator</h3><div class="f2"><div><label>Buy ($)</label><input id="pb" type="number"></div><div><label>Sell ($)</label><input id="ps" type="number"></div><div><label>Fees (%)</label><input id="pf" type="number" value="10"></div><div><label>Net</label><b id="pr" class="big">-</b></div></div></div>
  <div class="card"><h3>Backup</h3><p class="muted" style="margin-bottom:10px">Data lives only in this browser. Export regularly.</p><button class="btn g" id="ex">Export JSON</button> <button class="btn g" id="im">Import JSON</button><input type="file" id="fi" accept=".json" class="hide"></div></div>`;
 
@@ -192,7 +225,7 @@ V.chk=()=>`<div class="top"><h2>Domain checker</h2><button class="btn g" id="ch"
 async function api(u,b){
  const r=await fetch(u,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+tok},body:JSON.stringify(b)});
  if(r.status===401){$('#out').click();throw new Error('Session expired')}
- const d=await r.json();if(!r.ok)throw new Error(d.error||'Request failed');return d}
+ const d=await r.json();if(!r.ok)throw new Error((d.error||'Request failed')+(d.details?.length?' ('+d.details[0]+')':''));return d}
 async function runCheck(e){
  const raw=$('#cn').value.split(/[\n,\s]+/).map(s=>s.trim().toLowerCase().replace(/^https?:\/\//,'').replace(/\/.*$/,'')).filter(Boolean);
  const tl=$$('#tl input:checked').map(i=>i.value),names=[];
@@ -208,11 +241,11 @@ function renderChk(rs){
  const L={available:'Available',taken:'Taken',unknown:'Unknown'};
  $('#cr').innerHTML=(best?`<div class="card" style="margin-bottom:14px"><span class="muted">Cheapest available</span><div class="big up">${esc(best.domain)} at $${best.price.toFixed(2)}</div></div>`:'')+
  `<div class="card tbl"><table><thead><tr><th>Domain</th><th>Status</th><th>First year</th><th>Renewal</th><th>Register</th></tr></thead><tbody>${rs.map(r=>{const n=encodeURIComponent(r.domain);return`<tr><td><b>${esc(r.domain)}</b></td>
- <td><span class="tag ${r.status==='available'?'avail':r.status==='taken'?'taken':''}">${L[r.status]}</span>${r.expires?`<br><small class="muted">expires ${esc(r.expires)}</small>`:''}</td>
+ <td><span class="tag ${r.status==='available'?'avail':r.status==='taken'?'taken':''}">${r.status==='available'&&r.likely?'Likely available':L[r.status]}</span>${r.expires?`<br><small class="muted">expires ${esc(r.expires)}</small>`:''}</td>
  <td>${r.price!=null?'$'+r.price.toFixed(2):'-'}</td><td>${r.renew!=null?'$'+r.renew.toFixed(2):'-'}</td>
  <td style="white-space:nowrap">${r.status==='taken'?'':`<a class="lk" target="_blank" rel="noopener" href="https://porkbun.com/checkout/search?q=${n}">Porkbun</a><a class="lk" target="_blank" rel="noopener" href="https://www.namecheap.com/domains/registration/results/?domain=${n}">Namecheap</a><a class="lk" target="_blank" rel="noopener" href="https://www.dynadot.com/domain/search?domain=${n}">Dynadot</a>`}
  ${r.status==='available'?`<button class="btn g sm" onclick="watch('${esc(r.domain)}',${r.price||0})">Watch</button>`:''}</td></tr>`}).join('')}</tbody></table></div>
- <p class="muted" style="margin-top:10px;font-size:12px">Prices are Porkbun's live list. Other registrars can be cheaper with promos, so compare with the links. Premium names cost more than the listed price. Unknown means this extension's lookup service did not answer, so verify at a registrar.</p>`}
+ <p class="muted" style="margin-top:10px;font-size:12px">Prices are Porkbun's live list. Other registrars can be cheaper with promos, so compare with the links. Premium names cost more than the listed price. Likely available means the official registry lookup did not answer and DNS shows no records, so confirm at the registrar. Unknown means both lookups failed.</p>`}
 window.watch=async(name,price)=>{await putD({id:Date.now()+Math.floor(Math.random()*999),name,status:'watching',buy:price||''});toast(name+' added to Domains as Watching')};
 async function cheapest(e){
  e.target.disabled=1;$('#cr').innerHTML='<p class="muted">Loading prices...</p>';
@@ -230,7 +263,7 @@ function bind(){
  if(view==='ai'){const c=$('#chat');c.scrollTop=1e9;$('#cc').onclick=async()=>{await kset('chat',[]);render()};$('#cf').onsubmit=chat}
  if(view==='tools'){
   $('#vb').onclick=()=>{const n=$('#vs').value.trim();if(!n.includes('.'))return toast('Include the extension, like name.com');const s=score(n);$('#vr').innerHTML=`<b class="big">${s}/100</b><div class="score"><i style="width:${s}%"></i></div><p class="muted" style="margin-top:6px">Based on extension, length, hyphens, digits and pronounceability. Use the AI Coach for market demand.</p>`};
-  $('#gb').onclick=async e=>{const n=$('#gn').value.trim();if(!n)return;e.target.disabled=1;$('#gr').textContent='Thinking...';try{const d=await ai(`Suggest 15 brandable, short, flippable domain names for the niche "${n}". Include extensions. One per line with a 6-word reason. No numbering.`);$('#gr').textContent=d.text}catch(x){$('#gr').textContent=x.message}e.target.disabled=0};
+  $('#gb').onclick=async e=>{const n=$('#gn').value.trim();if(!n)return;e.target.disabled=1;$('#gr').textContent='Thinking...';try{const d=await ai(`Suggest 15 brandable, short, flippable domain names for the niche "${n}". Include extensions. One per line with a 6-word reason. No numbering.`);$('#gr').innerHTML=md(d.text)}catch(x){$('#gr').textContent=x.message}e.target.disabled=0};
   const pc=()=>{const b=+$('#pb').value,s=+$('#ps').value,f=+$('#pf').value;$('#pr').textContent=s?$$$(s*(1-f/100)-b):'-'};['pb','ps','pf'].forEach(i=>$('#'+i).oninput=pc);
   $('#ex').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:'application/json'}));a.download='domaindesk-backup.json';a.click()};
   $('#im').onclick=()=>$('#fi').click();
@@ -242,7 +275,7 @@ window.edit=id=>{const d=D.find(x=>x.id===id)||{status:'owned'},m={name:'name',s
 $('#cx').onclick=()=>$('#dlg').close();
 $('#df').onsubmit=async()=>{const id=+$('#df').dataset.id||Date.now(),o={id};for(const k of['name','status','reg','buy','bd','ask','sell','sd','rn','note'])o[k]=$('#f_'+k).value.trim();o.name=o.name.toLowerCase().replace(/^https?:\/\//,'').replace(/\/.*$/,'');await putD(o);toast('Saved '+o.name);render()};
 window.verdict=async(id,b)=>{const d=D.find(x=>x.id===id),el=$('#v'+id);b.disabled=1;el.textContent='Analyzing...';
- try{const r=await ai(`Analyze the domain ${d.name} for flipping. Status ${d.status}, bought for $${d.buy||0}, asking $${d.ask||'none'}. Give: verdict (buy/hold/sell/drop), realistic resale range, best buyer types, best marketplaces, and one risk. Under 120 words.`);el.textContent=r.text+'\n['+r.model+']'}catch(x){el.textContent=x.message}b.disabled=0};
+ try{const r=await ai(`Analyze the domain ${d.name} for flipping. Status ${d.status}, bought for $${d.buy||0}, asking $${d.ask||'none'}. Give: verdict (buy/hold/sell/drop), realistic resale range, best buyer types, best marketplaces, and one risk. Under 120 words.`);el.innerHTML=md(r.text)+'<small class="muted">'+esc(r.model)+'</small>'}catch(x){el.textContent=x.message}b.disabled=0};
 async function chat(e){e.preventDefault();if(busy)return;const i=$('#ci'),t=i.value.trim();if(!t)return;busy=true;i.value='';
  const h=await kget('chat')||[];h.push({r:'u',t});await kset('chat',h);$('#chat').insertAdjacentHTML('beforeend',mh({r:'u',t})+'<div class="m" id="typ">Thinking...</div>');$('#chat').scrollTop=1e9;
  const ctx=h.slice(-8).map(m=>(m.r==='u'?'User: ':'Advisor: ')+m.t).join('\n');
