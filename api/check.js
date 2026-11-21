@@ -1,29 +1,36 @@
 import { verify } from './_auth.js';
 
-let cache = { at: 0, data: null };
+const mem = { price: { at: 0, d: null }, boot: { at: 0, d: null } };
+const T = (ms) => AbortSignal.timeout(ms);
+const settle = (p) => p.catch(() => null);
 
 // Porkbun publishes TLD pricing without an API key.
 async function prices() {
-  if (cache.data && Date.now() - cache.at < 36e5) return cache.data;
+  if (mem.price.d && Date.now() - mem.price.at < 36e5) return mem.price.d;
   const r = await fetch('https://api.porkbun.com/api/json/v3/pricing/get', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: '{}',
-    signal: AbortSignal.timeout(8000),
+    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}', signal: T(3500),
   });
   const d = await r.json();
   if (d.status !== 'SUCCESS') throw new Error('Pricing unavailable');
-  cache = { at: Date.now(), data: d.pricing };
+  mem.price = { at: Date.now(), d: d.pricing };
   return d.pricing;
 }
 
-// RDAP is the free, official registration lookup: 404 means not registered.
-async function rdap(domain) {
+// IANA lists the official RDAP server for each extension (more reliable than rdap.org).
+async function bootstrap() {
+  if (mem.boot.d && Date.now() - mem.boot.at < 864e5) return mem.boot.d;
+  const j = await (await fetch('https://data.iana.org/rdap/dns.json', { signal: T(3500) })).json();
+  const map = {};
+  for (const [tlds, urls] of j.services) for (const t of tlds) map[t] = urls.find((u) => u.startsWith('https')) || urls[0];
+  mem.boot = { at: Date.now(), d: map };
+  return map;
+}
+
+async function rdap(domain, base) {
+  if (!base) return null;
   try {
-    const r = await fetch('https://rdap.org/domain/' + encodeURIComponent(domain), {
-      headers: { Accept: 'application/rdap+json' },
-      redirect: 'follow',
-      signal: AbortSignal.timeout(7000),
+    const r = await fetch(base.replace(/\/?$/, '/') + 'domain/' + domain, {
+      headers: { Accept: 'application/rdap+json' }, redirect: 'follow', signal: T(3500),
     });
     if (r.status === 404) return { status: 'available' };
     if (r.ok) {
@@ -32,16 +39,28 @@ async function rdap(domain) {
       return { status: 'taken', expires: ev?.eventDate?.slice(0, 10) };
     }
   } catch {}
-  return { status: 'unknown' };
+  return null;
+}
+
+// Fallback: NXDOMAIN with no NS records usually means the name is unregistered.
+async function dns(domain) {
+  try {
+    const r = await fetch('https://cloudflare-dns.com/dns-query?type=NS&name=' + domain, {
+      headers: { Accept: 'application/dns-json' }, signal: T(2500),
+    });
+    const j = await r.json();
+    if (j.Status === 3) return { status: 'available', likely: true };
+    if (j.Status === 0) return { status: 'taken' };
+  } catch {}
+  return null;
 }
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
   if (!verify(req)) return res.status(401).json({ error: 'Unauthorized' });
 
-  let pr = null;
-  try { pr = await prices(); } catch {}
   const { names, cheap } = req.body || {};
+  const [pr, boot] = await Promise.all([settle(prices()), settle(bootstrap())]);
 
   if (cheap) {
     if (!pr) return res.status(502).json({ error: 'Could not load pricing right now' });
@@ -58,11 +77,10 @@ export default async function handler(req, res) {
   if (!list.length) return res.status(400).json({ error: 'No valid domains' });
 
   const results = await Promise.all(list.map(async (domain) => {
-    const tld = domain.split('.').slice(1).join('.');
-    const p = pr?.[tld];
-    let r = await rdap(domain);
-    // A 404 for a TLD we have no pricing for may just mean "no RDAP server", so don't claim it's free.
-    if (r.status === 'available' && pr && !p) r = { status: 'unknown' };
+    const parts = domain.split('.');
+    const [a, b] = await Promise.all([rdap(domain, boot?.[parts[parts.length - 1]]), dns(domain)]);
+    const r = a || b || { status: 'unknown' };
+    const p = pr?.[parts.slice(1).join('.')];
     return { domain, ...r, price: p ? +p.registration : null, renew: p ? +p.renewal : null };
   }));
   res.json({ results });
